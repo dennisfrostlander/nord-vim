@@ -469,9 +469,12 @@ hi! link markdownHeadingDelimiter Keyword
 call s:hi("perlPackageDecl", s:nord7_gui, "", s:nord7_term, "", "", "")
 
 call s:hi("phpClasses", s:nord7_gui, "", s:nord7_term, "", "", "")
+call s:hi("phpClass", s:nord7_gui, "", s:nord7_term, "", "", "")
 call s:hi("phpDocTags", s:nord7_gui, "", s:nord7_term, "", "", "")
 hi! link phpDocCustomTags phpDocTags
 hi! link phpMemberSelector Keyword
+hi! link phpMethod Function
+hi! link phpFunction Function
 
 call s:hi("podCmdText", s:nord7_gui, "", s:nord7_term, "", "", "")
 call s:hi("podVerbatimLine", s:nord4_gui, "", "NONE", "", "", "")
@@ -559,12 +562,13 @@ call s:hi("ALEErrorSign" , s:nord11_gui, "", s:nord11_term, "", "", "")
 call s:hi("ALEWarning" , s:nord13_gui, "", s:nord13_term, "", "undercurl", "")
 call s:hi("ALEError" , s:nord11_gui, "", s:nord11_term, "", "undercurl", "")
 
-" Coc
-" > neoclide/coc
-call s:hi("CocWarningSign", s:nord13_gui, "", s:nord13_term, "", "", "")
-call s:hi("CocErrorSign" , s:nord11_gui, "", s:nord11_term, "", "", "")
-call s:hi("CocInfoSign" , s:nord8_gui, "", s:nord8_term, "", "", "")
-call s:hi("CocHintSign" , s:nord10_gui, "", s:nord10_term, "", "", "")
+
+" Nvim LSP
+" > neovim/nvim-lsp
+call s:hi("LSPDiagnosticsWarning", s:nord13_gui, "", s:nord13_term, "", "", "")
+call s:hi("LSPDiagnosticsError" , s:nord11_gui, "", s:nord11_term, "", "", "")
+call s:hi("LSPDiagnosticsInformation" , s:nord8_gui, "", s:nord8_term, "", "", "")
+call s:hi("LSPDiagnosticsHint" , s:nord10_gui, "", s:nord10_term, "", "", "")
 
 " Nvim LSP
 " > neovim/nvim-lsp
@@ -762,3 +766,70 @@ hi! link VimwikiList markdownListMarker
 " YAML
 " > stephpy/vim-yaml
 call s:hi("yamlKey", s:nord7_gui, "", s:nord7_term, "", "", "")
+
+"+------------+
+"+ Public API +
+"+------------+
+"+--- Functions ---+
+
+function! NordPalette() abort
+  let ret = {}
+  for color in range(16)
+    execute 'let ret["nord'.color.'"] = s:nord'.color.'_gui'
+  endfor
+  let ret["nord3_bright"] = s:nord3_gui_bright
+  return ret
+endfunction
+
+" Treesitter
+if has("nvim") && exists("g:nord_enable_treesitter")
+    !hi link TSError Error
+    !hi link TSPunctDelimiter  Delimiter
+    !hi link TSPunctBracket  Delimiter
+    !hi link TSPunctSpecial Delimiter
+    !hi link TSConstant Constant
+    !hi link TSConstBuiltin Constant
+    !hi link TSConstMacro Constant
+    !hi link TSStringRegex SpecialChar
+    !hi link TSString String
+    !hi link TSStringEscape String
+    !hi link TSCharacter Character
+    !hi link TSNumber Number
+    !hi link TSBoolean Boolean
+    !hi link TSFloat Float
+    !hi link TSAnnotation Structure
+    !hi link TSAttribute Attributes
+    !hi link TSNamespace Structure
+    !hi link TSFuncBuiltin Function
+    !hi link TSFunction Function
+    !hi link TSFuncMacro Function
+    !hi link TSParameter Operator
+    !hi link TSParameterReferenc Operator
+    !hi link TSMethod Function
+    !hi link TSField Attributes
+    !hi link TSProperty Attributes
+    !hi link TSConstructor Function
+    !hi link TSConditional Conditional
+    !hi link TSRepeat Repeat
+    !hi link TSLabel Label
+    !hi link TSKeyword Keyword
+    !hi link TSKeywordFunction Function
+    !hi link TSKeywordOperator Operator
+    !hi link TSOperator Operator
+    !hi link TSException Exception
+    !hi link TSType Type
+    !hi link TSTypeBuiltin Type
+    !hi link TSStructure Structure
+    !hi link TSInclude Include
+    !hi link TSVariable Variable
+    !hi link TSVariableBuiltin Variable
+    !hi link TSText String
+    !hi link TSStrong Bold
+    !hi link TSEmphasis Italic
+    !hi link TSUnderline Underline
+    !hi link TSTitle Comment
+    !hi link TSLiteral String
+    !hi link TSURI Underline
+    !hi link TSTag Tag
+    !hi link TSTagDelimiter Tag
+endif
